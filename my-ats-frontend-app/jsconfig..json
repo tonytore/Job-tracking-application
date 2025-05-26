@@ -1,0 +1,20 @@
+// jsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".", // This is important. It sets the base directory for module resolution.
+    "paths": {
+      "@/*": ["./src/*"] // This maps the alias "@" to your "src" folder
+    },
+    "jsx": "react-jsx", // Specify JSX factory for React 17+
+    "allowJs": true, // Allow JavaScript files
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "esModuleInterop": true, // Enables `import d from 'esm'`
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": false, // You might want to set this to true for better code quality, but start with false
+    "noEmit": true // Do not emit output files
+  },
+  "include": ["src"], // Include your source files
+  "exclude": ["node_modules"] // Exclude node modules
+}

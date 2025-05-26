@@ -1,0 +1,51 @@
+{
+  "name": "type-ats-backend",
+  "version": "1.0.0",
+  "description": "Backend for an Applicant Tracking System (ATS)",
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc && tsc-alias",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "keywords": [
+    "ats",
+    "backend",
+    "typescript",
+    "express",
+    "prisma"
+  ],
+  "author": "insa",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "@types/multer": "^1.4.12",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.19",
+    "dotenv": "^16.5.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.8.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}

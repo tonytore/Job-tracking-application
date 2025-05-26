@@ -1,0 +1,20 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "jsx": "react-jsx", // Essential for React JSX syntax
+    "allowJs": true, // Allows JavaScript files to be processed by TypeScript (even if not strictly type-checked)
+    "skipLibCheck": true, // Speeds up compilation by skipping type checks on declaration files
+    "esModuleInterop": true, // Enables better interoperability for CommonJS and ES Modules
+    "forceConsistentCasingInFileNames": true, // Ensures consistent casing in file names
+    "resolveJsonModule": true, // Allows importing JSON files
+    "isolatedModules": true, // Ensures each file can be compiled independently (important for some build tools)
+    "strict": false, // You can set this to true later for stricter type checking if you migrate to TS
+    "noEmit": true // Do not emit output files (Vite handles compilation)
+  },
+  "include": ["src"], // Specify which files TypeScript should consider
+  "exclude": ["node_modules", "dist"] // Exclude these directories from processing
+}
