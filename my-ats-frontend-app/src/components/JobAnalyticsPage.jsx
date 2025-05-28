@@ -82,15 +82,15 @@ const JobAnalyticsPage = ({ API_BASE_URL, token, navigateTo }) => { // Added nav
 
   if (error) {
     return (
-      <div className="text-center py-8 text-red-600 font-semibold text-lg bg-red-50 rounded-lg mx-auto max-w-xl shadow-md">
+      <div className="text-center py-8 text-red-600 pt-10 mt-20 font-semibold text-lg bg-red-50 rounded-lg mx-auto max-w-xl shadow-md">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center tracking-tight">Job Posting Analytics</h2>
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto ">
+      <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8 text-center tracking-tight pt-11">Job Posting Analytics</h2>
 
       {analyticsData.length === 0 ? (
         <p className="text-center text-gray-600 text-lg py-10 bg-white rounded-lg shadow-md">No job postings found or no applicants yet.</p>

@@ -77,8 +77,14 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
         }
 
         const data = await response.json();
-        setApplications(data);
-        console.log("Applications fetched successfully:", data);
+
+        // 🔽 Sort applications by applicationDate (or createdAt) in descending order (LIFO)
+        const sortedApplications = [...data].sort((a, b) =>
+          new Date(b.applicationDate).getTime() - new Date(a.applicationDate).getTime()
+        );
+
+        setApplications(sortedApplications);
+        console.log("Applications fetched and sorted (LIFO):", sortedApplications);
       } catch (err) {
         console.error("Error fetching applications:", err);
         setError('Failed to load applications. Please ensure you are logged in and the backend is running.');
@@ -147,7 +153,7 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute top-0 left-0 z-10 block cursor-pointer transform -translate-x-4 -translate-y-4
-                             transition-transform duration-300 ease-in-out hover:scale-110" // --- CHANGED: Added cursor-pointer ---
+                             transition-transform duration-300 ease-in-out hover:scale-110"
                   >
                     <img
                       src={getFileUrl(API_BASE_URL, app.profilePictureFileName)}
@@ -165,6 +171,10 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
                   </h3>
                   <p className="text-sm sm:text-base text-gray-700 mb-1">
                     <span className="font-medium text-gray-800">Email:</span> {app.applicant?.email}
+                  </p>
+                  {/* ADD THIS LINE FOR PHONE NUMBER */}
+                  <p className="text-sm sm:text-base text-gray-700 mb-1">
+                    <span className="font-medium text-gray-800">Phone:</span> {app.applicant?.phone || 'N/A'}
                   </p>
                   <p className="text-sm sm:text-base text-gray-700 mb-1">
                     <span className="font-medium text-gray-800">Job:</span> {app.jobPosting?.title || 'N/A'}
@@ -186,7 +196,7 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold bg-purple-100 text-purple-800
-                                     hover:bg-purple-200 transition-colors duration-200 shadow-sm hover:shadow-md cursor-pointer" // --- CHANGED: Added cursor-pointer ---
+                                     hover:bg-purple-200 transition-colors duration-200 shadow-sm hover:shadow-md cursor-pointer"
                         >
                           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -204,7 +214,7 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
                           {displayCoverLetterPreview}
                           {needsTruncation && (
                             <span
-                              className="ml-1 text-purple-600 cursor-pointer hover:text-purple-800 font-medium transition-colors duration-200" // --- CHANGED: Added cursor-pointer ---
+                              className="ml-1 text-purple-600 cursor-pointer hover:text-purple-800 font-medium transition-colors duration-200"
                               onClick={() => openCoverLetterDialog(app.coverLetter)}
                             >
                               ... Click to view full
@@ -215,7 +225,7 @@ const ApplicationList = ({ API_BASE_URL, token }) => {
                         {!needsTruncation && app.coverLetter && (
                           <button
                             onClick={() => openCoverLetterDialog(app.coverLetter)}
-                            className="mt-2 text-purple-600 hover:text-purple-800 font-medium text-sm transition-colors duration-200 cursor-pointer" // --- CHANGED: Added cursor-pointer ---
+                            className="mt-2 text-purple-600 hover:text-purple-800 font-medium text-sm transition-colors duration-200 cursor-pointer"
                           >
                             View Cover Letter
                           </button>

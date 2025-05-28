@@ -110,7 +110,7 @@ const JobApplicantsDetailPage = ({ API_BASE_URL, token, jobPostingId, navigateTo
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 text-center tracking-tight">
+      <h2 className="text-3xl pt-11 sm:text-4xl font-extrabold text-gray-900 mb-6 text-center tracking-tight">
         Applicants for: <span className="text-indigo-700">{jobTitle}</span>
       </h2>
       <button

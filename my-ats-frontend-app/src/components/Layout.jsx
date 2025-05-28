@@ -1,10 +1,11 @@
 // src/components/Layout.jsx
 import React from 'react';
-import Sidebar from './Sidebar';
 import Header from './Header';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 
 const Layout = ({
+  children,
   currentPage,
   navigateTo,
   currentUser,
@@ -12,14 +13,11 @@ const Layout = ({
   toggleSidebar,
   isSidebarOpen,
   message,
-  children, // This prop will be the actual page content
-  // NEW: Receive global search props from App
   handleGlobalSearch,
-  globalSearchQuery
+  globalSearchQuery,
 }) => {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 font-sans flex">
-      {/* Sidebar Component */}
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-100">
       <Sidebar
         currentPage={currentPage}
         navigateTo={navigateTo}
@@ -28,32 +26,35 @@ const Layout = ({
         isSidebarOpen={isSidebarOpen}
       />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8 transition-all duration-300 ease-in-out">
-        {/* Header Component */}
+      <div className="flex-1 flex flex-col">
         <Header
-          toggleSidebar={toggleSidebar}
+          currentPage={currentPage}
+          navigateTo={navigateTo}
           currentUser={currentUser}
           handleLogout={handleLogout}
-          navigateTo={navigateTo}
-          // NEW: Pass global search props to Header
+          toggleSidebar={toggleSidebar}
+          isSidebarOpen={isSidebarOpen}
           handleGlobalSearch={handleGlobalSearch}
           globalSearchQuery={globalSearchQuery}
         />
 
-        {/* Global Message Display */}
-        {message && (
-          <div className="w-full max-w-4xl p-3 mb-4 rounded-md text-sm text-center bg-blue-100 text-blue-700 shadow-md">
-            {message}
-          </div>
-        )}
-
-        {/* Main content area for pages */}
-        <main className="w-full max-w-6xl pt-12 flex justify-center items-center flex-grow">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          {message && (
+            <div className={`p-3 mb-4 rounded-md text-center text-sm
+                             ${message.includes('success') ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}
+              role={message.includes('success') ? "status" : "alert"}
+            >
+              {message}
+            </div>
+          )}
           {children}
         </main>
 
-        <Footer navigateTo={navigateTo} currentUser={currentUser} onLogout={handleLogout} />
+        <Footer
+          navigateTo={navigateTo}
+          currentUser={currentUser}
+          onLogout={handleLogout} // Ensure this prop name matches
+        />
       </div>
     </div>
   );

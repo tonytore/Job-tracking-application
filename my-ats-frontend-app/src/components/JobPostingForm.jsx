@@ -122,8 +122,8 @@ const JobPostingForm = ({ API_BASE_URL, token }) => { // <-- Added token prop
 
   return (
     // UPDATED: Changed max-w-md to max-w-2xl for a larger proportional size
-    <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-2xl">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create New Job Posting</h2>
+    <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-2xl mt-16 mx-auto">
+      <h2 className="text-2xl pt-11 font-bold text-gray-900 mb-6 text-center">Create New Job Posting</h2>
       {message && (
         <div className={`p-4 mb-4 rounded-lg text-center ${isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
           {message}

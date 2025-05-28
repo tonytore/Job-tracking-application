@@ -1,3 +1,4 @@
+// src/components/LoginForm.jsx
 import React, { useState } from 'react';
 
 // Centralized Spinner Component (can be moved to its own file if used more widely)
@@ -54,9 +55,16 @@ const LoginForm = ({ API_BASE_URL, onLoginSuccess, navigateTo }) => {
         setIsError(false);
         setEmail('');
         setPassword('');
+        // Store the token and the user's role in localStorage
         localStorage.setItem('jwtToken', result.token);
+        // Assuming result.user contains { id, email, role } from backend
+        localStorage.setItem('userRole', result.user.role); // Store the role
+
         console.log('JWT Token stored:', result.token);
+        console.log('User Role stored:', result.user.role);
+
         if (onLoginSuccess) {
+          // Pass the user object including role to onLoginSuccess in App.jsx
           onLoginSuccess(result.user, result.token);
         }
       } else {
@@ -130,4 +138,4 @@ const LoginForm = ({ API_BASE_URL, onLoginSuccess, navigateTo }) => {
   );
 };
 
-export default LoginForm; // Export as default
+export default LoginForm;

@@ -7,11 +7,12 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [applicantEmail, setApplicantEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(''); // NEW: State for phone number
   const [yearsOfExperience, setYearsOfExperience] = useState('');
   const [highestEducation, setHighestEducation] = useState('');
   const [coverLetter, setCoverLetter] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
-  const [profilePictureFile, setProfilePictureFile] = useState(null); // NEW: State for profile picture
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -68,7 +69,10 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
     formData.append('highestEducation', highestEducation);
     formData.append('coverLetter', coverLetter);
     formData.append('cvFile', resumeFile);
-    if (profilePictureFile) { // Conditionally append if a file is selected
+    if (phoneNumber) { // NEW: Conditionally append phone number
+      formData.append('phone', phoneNumber);
+    }
+    if (profilePictureFile) {
       formData.append('profilePictureFile', profilePictureFile);
     }
 
@@ -83,11 +87,12 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
         setFirstName('');
         setLastName('');
         setApplicantEmail('');
+        setPhoneNumber(''); // NEW: Clear phone number input
         setYearsOfExperience('');
         setHighestEducation('');
         setCoverLetter('');
         setResumeFile(null);
-        setProfilePictureFile(null); // NEW: Clear profile picture input
+        setProfilePictureFile(null);
         // Optionally navigate away
         // navigateTo('/jobListings');
       } else {
@@ -189,6 +194,19 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
             required
           />
         </div>
+        {/* NEW: Phone Number Input */}
+        <div>
+          <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
+          <input
+            type="tel" // Use type="tel" for phone numbers
+            id="phoneNumber"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="e.g., +15551234567"
+          />
+        </div>
+        {/* END NEW */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="yearsOfExperience" className="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
@@ -233,7 +251,6 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
           />
           {resumeFile && <p className="text-sm text-gray-500 mt-1">Selected: {resumeFile.name}</p>}
         </div>
-        {/* NEW: Profile Picture Input */}
         <div>
           <label htmlFor="profilePictureFile" className="block text-sm font-medium text-gray-700 mb-1">Upload Profile Picture (Optional, JPG, PNG)</label>
           <input
@@ -245,7 +262,6 @@ const JobApplicationForm = ({ API_BASE_URL, selectedJobId, navigateTo }) => {
           />
           {profilePictureFile && <p className="text-sm text-gray-500 mt-1">Selected: {profilePictureFile.name}</p>}
         </div>
-        {/* END NEW */}
         <div>
           <label htmlFor="coverLetter" className="block text-sm font-medium text-gray-700 mb-1">Cover Letter (Optional)</label>
           <textarea

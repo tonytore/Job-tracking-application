@@ -1,11 +1,16 @@
 // src/components/Footer.jsx
 import React from 'react';
 
-// Use 'onLogout' here to match how it's passed from Layout/App
 const Footer = ({ navigateTo, currentUser, onLogout }) => {
   // Base button styles for consistency for the Login/Logout buttons
-  // Retaining the consistent button styles as requested previously
   const baseAuthButtonClasses = "px-4 py-2 rounded-md shadow-md transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm font-semibold cursor-pointer";
+
+  // Define UserRole enum (consistent with Sidebar and backend)
+  const UserRole = {
+    APPLICANT: 'APPLICANT',
+    RECRUITER: 'RECRUITER',
+    ADMIN: 'ADMIN',
+  };
 
   return (
     <footer className="w-full bg-gray-800 text-gray-300 py-8 px-4 sm:px-6 lg:px-8 mt-12">
@@ -28,20 +33,29 @@ const Footer = ({ navigateTo, currentUser, onLogout }) => {
             <li>
               <button onClick={() => navigateTo('jobListings')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">Browse Jobs</button>
             </li>
-            {/* Conditional links for logged-in users (no role check) */}
+            {/* Conditional links based on user role */}
             {currentUser && (
               <>
-                {/* These links will now show for ANY logged-in user */}
-                <li>
-                  <button onClick={() => navigateTo('viewApplications')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">My Applications</button>
-                </li>
-                <li>
-                  <button onClick={() => navigateTo('createJob')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">Post a Job</button>
-                </li>
-                <li>
-                  <button onClick={() => navigateTo('analytics')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">Analytics</button>
-                </li>
+                {/* View My Applications: Accessible to all authenticated users (APPLICANT, RECRUITER, ADMIN) */}
+                {currentUser.role && [UserRole.APPLICANT, UserRole.RECRUITER, UserRole.ADMIN].includes(currentUser.role) && (
+                  <li>
+                    <button onClick={() => navigateTo('viewApplications')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">My Applications</button>
+                  </li>
+                )}
 
+                {/* Post a Job: Accessible only to Recruiters and Admins */}
+                {currentUser.role && [UserRole.RECRUITER, UserRole.ADMIN].includes(currentUser.role) && (
+                  <li>
+                    <button onClick={() => navigateTo('createJob')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">Post a Job</button>
+                  </li>
+                )}
+
+                {/* Analytics: Accessible only to Admins */}
+                {currentUser.role && currentUser.role === UserRole.ADMIN && (
+                  <li>
+                    <button onClick={() => navigateTo('analytics')} className="text-gray-300 hover:text-indigo-400 transition-colors duration-200 text-sm cursor-pointer">Analytics</button>
+                  </li>
+                )}
               </>
             )}
           </ul>
